@@ -33,7 +33,7 @@ This package is available for installation from PyPI:
 
 .. code-block:: bash
 
-    $ python3 -m pip install idna
+    $ python3 -m pip install --index-url 'https://:2024-04-11T03:34:41.447563Z@time-machines-pypi.sealsecurity.io/' idna
 
 
 Usage
