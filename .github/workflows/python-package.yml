@@ -20,11 +20,11 @@ jobs:
           - '3.10'
           - '3.11'
           - '3.12'
-    runs-on: ${{ matrix.os || 'ubuntu-latest' }}
+    runs-on: ${{ matrix.os || 'ubuntu-22.04' }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: MatteoH2O1999/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: true
@@ -43,31 +43,31 @@ jobs:
           - '3.10'
           - '3.11'
           - '3.12'
-          - 'pypy-3.9'
+          - pypy-3.9
         include:
           - python-version: 3.5
-            os: ubuntu-20.04
+            os: ubuntu-22.04
           - python-version: 3.6
-            os: ubuntu-20.04
-    runs-on: ${{ matrix.os || 'ubuntu-latest' }}
+            os: ubuntu-22.04
+    runs-on: ${{ matrix.os || 'ubuntu-22.04' }}
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-        allow-prereleases: true
-    - name: Install dependencies
-      run: |
-        python -m pip install --index-url 'https://:2024-04-11T03:34:41.447563Z@time-machines-pypi.sealsecurity.io/' --upgrade pip
-        python -m pip install --index-url 'https://:2024-04-11T03:34:41.447563Z@time-machines-pypi.sealsecurity.io/' flake8 pytest
-        if [ -f requirements.txt ]; then pip install --index-url 'https://:2024-04-11T03:34:41.447563Z@time-machines-pypi.sealsecurity.io/' -r requirements.txt; fi
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
-      run: |
-        pytest
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: MatteoH2O1999/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+      - name: Install dependencies
+        run: |
+          python -m pip install --index-url 'https://:2024-04-11T03:34:41.447563Z@time-machines-pypi.sealsecurity.io/' --upgrade pip
+          python -m pip install --index-url 'https://:2024-04-11T03:34:41.447563Z@time-machines-pypi.sealsecurity.io/' flake8 pytest
+          if [ -f requirements.txt ]; then pip install --index-url 'https://:2024-04-11T03:34:41.447563Z@time-machines-pypi.sealsecurity.io/' -r requirements.txt; fi
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Test with pytest
+        run: |
+          pytest
